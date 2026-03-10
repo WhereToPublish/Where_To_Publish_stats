@@ -31,12 +31,12 @@ APC.unethic = data_table.APC___(ismember(data_table.PublisherType,{'For-profit',
 [h_norm.unethic, p_norm.unethic] = lillietest(APC.unethic);
 
 %% average the APCs for each category
-[FP.mean, FP.sem, FP.sd] = mean_sem_sd(APC.FP,1);
-[NP.mean, NP.sem, NP.sd] = mean_sem_sd(APC.NP,1);
-[UP.mean, UP.sem, UP.sd] = mean_sem_sd(APC.UP,1);
-[FP_S.mean, FP_S.sem, FP_S.sd] = mean_sem_sd(APC.FP_S,1);
-[ethic.mean, ethic.sem, ethic.sd] = mean_sem_sd(APC.ethic,1);
-[unethic.mean, unethic.sem, unethic.sd] = mean_sem_sd(APC.unethic,1);
+[FP.mean, FP.sem, FP.sd, FP.median] = mean_sem_sd(APC.FP,1);
+[NP.mean, NP.sem, NP.sd, NP.median] = mean_sem_sd(APC.NP,1);
+[UP.mean, UP.sem, UP.sd, UP.median] = mean_sem_sd(APC.UP,1);
+[FP_S.mean, FP_S.sem, FP_S.sd, FP_S.median] = mean_sem_sd(APC.FP_S,1);
+[ethic.mean, ethic.sem, ethic.sd, ethic.median] = mean_sem_sd(APC.ethic,1);
+[unethic.mean, unethic.sem, unethic.sd, unethic.median] = mean_sem_sd(APC.unethic,1);
 
 %% compare the APCs between the categories (only for normal data)
 % ethic (UP+NP) vs unethic (FP + FP and society)
