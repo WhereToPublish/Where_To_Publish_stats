@@ -3,14 +3,8 @@
 % for-profit based on the where to publish database. It will also look at
 % their eventual statistical difference depending on the scheme.
 
-%% working directory
-curr_folder = pwd; % folder where analysis folder is located
-prt_folder = fileparts(curr_folder);
-data_folder = fullfile(prt_folder,'data');
-
 %% load the data
-data_path = fullfile(data_folder,'WhereToPublish.csv');
-data_table = readtable(data_path);
+[data_table] = load_whereToPublish_data;
 
 %% extract the data for each category + pool non-profit and UP together in a 4th category
 APC.FP = data_table.APC___(strcmp(data_table.PublisherType,'For-profit'));
