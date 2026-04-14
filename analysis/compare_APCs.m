@@ -16,6 +16,25 @@ APC.FP_S = data_table.APC___(strcmp(data_table.PublisherType,'For-profit associa
 APC.ethic = data_table.APC___(ismember(data_table.PublisherType,{'Non-profit','University Press','University Press associated with a society'})); % pool together all university press
 APC.unethic = data_table.APC___(ismember(data_table.PublisherType,{'For-profit','For-profit associated with a society'}));
 
+%% display first graphs with the distribution for each
+% just show ethic (NP+UP) against unethic (FP)
+fig;
+Violin({APC.ethic},1);
+Violin({APC.unethic},2);
+ylabel('APC (€)');
+xticks(1:2);
+xticklabels({'NP/UP','FP'});
+
+% display a second graph with more details
+fig;
+Violin({APC.NP},1);
+Violin({APC.UP},2);
+Violin({APC.FP},3);
+Violin({APC.FP_S},4);
+ylabel('APC (€)');
+xticks(1:4);
+xticklabels({'NP','UP','FP','FP_S'});
+
 %% check data normality (if h=1 data is NOT normal)
 [h_norm.FP, p_norm.FP] = lillietest(APC.FP);
 [h_norm.NP, p_norm.NP] = lillietest(APC.NP);
