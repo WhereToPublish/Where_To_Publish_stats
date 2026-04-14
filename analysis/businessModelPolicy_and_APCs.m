@@ -27,11 +27,18 @@ OA_APCs = data_forProfit.APC___(OA_journals_idx);
 % non-OA journals
 nonOA_journals_idx = ismember(data_forProfit.BusinessModel,{'Hybrid','Subscription'});
 nonOA_APCs = data_forProfit.APC___(nonOA_journals_idx);
+% split non-OA between Hybrid and Subscription
+hybrid_journals_idx = ismember(data_forProfit.BusinessModel,{'Hybrid'});
+hybrid_APCs = data_forProfit.APC___(hybrid_journals_idx);
+subscribe_journals_idx = ismember(data_forProfit.BusinessModel,{'Subscription'});
+subscribe_APCs = data_forProfit.APC___(subscribe_journals_idx);
 
 %% perform stats
 % check if distributions can be considered normal or not
 [h_norm.OA, p_norm.OA] = lillietest(OA_APCs);
 [h_norm.nonOA, p_norm.nonOA] = lillietest(nonOA_APCs);
+[h_norm.hybrid, p_norm.hybrid] = lillietest(hybrid_APCs);
+[h_norm.subscribe, p_norm.subscribe] = lillietest(subscribe_APCs);
 % perform test to compare both distributions
 if h_norm.OA == 0 && h_norm.nonOA == 0 % apply t-test only if data is normal in both distributions
     [~,pval_ttest] = ttest2(OA_APCs, nonOA_APCs);
@@ -45,8 +52,12 @@ end
 % extract average+SEM
 [APC.OA.mean, APC.OA.sem, APC.OA.sd, APC.OA.median] = mean_sem_sd(OA_APCs,1);
 [APC.nonOA.mean, APC.nonOA.sem, APC.nonOA.sd, APC.nonOA.median] = mean_sem_sd(nonOA_APCs,1);
+[APC.hybrid.mean, APC.hybrid.sem, APC.hybrid.sd, APC.hybrid.median] = mean_sem_sd(hybrid_APCs,1);
+[APC.subscribe.mean, APC.subscribe.sem, APC.subscribe.sd, APC.subscribe.median] = mean_sem_sd(subscribe_APCs,1);
 
 %% display data
+
+% just show OA vs non-OA
 fig;
 Violin({OA_APCs}, 1);
 Violin({nonOA_APCs}, 2);
@@ -60,3 +71,12 @@ end
 ylabel('APCs (€)');
 xticks(1:2);
 xticklabels({'OA','non-OA'});
+
+% split data between OA, Hybrid and Subscription
+fig;
+Violin({OA_APCs}, 1);
+Violin({hybrid_APCs}, 2);
+Violin({subscribe_APCs}, 3);
+ylabel('APCs (€)');
+xticks(1:3);
+xticklabels({'OA','Hybrid','Subscription'});
