@@ -39,7 +39,7 @@ subscribe_APCs = data_forProfit.APC___(subscribe_journals_idx);
 [h_norm.nonOA, p_norm.nonOA] = lillietest(nonOA_APCs);
 [h_norm.hybrid, p_norm.hybrid] = lillietest(hybrid_APCs);
 [h_norm.subscribe, p_norm.subscribe] = lillietest(subscribe_APCs);
-% perform test to compare both distributions
+% perform test to compare OA/non-OA distributions
 if h_norm.OA == 0 && h_norm.nonOA == 0 % apply t-test only if data is normal in both distributions
     [~,pval_ttest] = ttest2(OA_APCs, nonOA_APCs);
     [pval_mw, pval_ks] = deal([]);
@@ -48,6 +48,17 @@ else % use non-parametric test
     [pval_mw] = ranksum(OA_APCs, nonOA_APCs); % Mann-Whitney test
     [~,pval_ks] = kstest2(OA_APCs, nonOA_APCs); % Kolmogorov-Smirnoff test
 end
+% % perform test to compare OA/Hybrid distributions (in theory, you should do
+% % an ANOVA with the 3 groups, but currently subscription group is too
+% % underpowered)
+% if h_norm.OA == 0 && h_norm.hybrid == 0 % apply t-test only if data is normal in both distributions
+%     [~,pval_ttest_OAvsHybrid] = ttest2(OA_APCs, hybrid_APCs);
+%     [pval_mw_OAvsHybrid, pval_ks_OAvsHybrid] = deal([]);
+% else % use non-parametric test
+%     pval_ttest_OAvsHybrid = [];
+%     [pval_mw_OAvsHybrid] = ranksum(OA_APCs, hybrid_APCs); % Mann-Whitney test
+%     [~,pval_ks_OAvsHybrid] = kstest2(OA_APCs, hybrid_APCs); % Kolmogorov-Smirnoff test
+% end
 
 % extract average+SEM
 [APC.OA.mean, APC.OA.sem, APC.OA.sd, APC.OA.median] = mean_sem_sd(OA_APCs,1);
