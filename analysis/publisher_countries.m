@@ -11,6 +11,8 @@ publisherCountries = data_table.Country_Publisher_;
 publisherCountries(strcmp(publisherCountries,'')) = {'other / unknown'};
 % extract the list of all unique countries
 allPubCountry_names = unique(publisherCountries);
+% merge "Germany / UK" with "UK / Germany"
+allPubCountry_names(strcmp(allPubCountry_names,'UK / Germany')) = [];
 n_countries = length(allPubCountry_names);
 
 %% extract number for each country
@@ -19,7 +21,11 @@ n_journals_perCountry = zeros(1,n_countries);
 % loop through journals
 for iJ = 1:n_journals
     journal_country = publisherCountries{iJ};
-    journals_country_idx = strcmp(journal_country, allPubCountry_names);
+    if ismember(journal_country,{'Germany / UK','UK / Germany'})
+        journals_country_idx = strcmp('Germany / UK', allPubCountry_names);
+    else
+        journals_country_idx = strcmp(journal_country, allPubCountry_names);
+    end
     n_journals_perCountry(journals_country_idx) = n_journals_perCountry(journals_country_idx) + 1;
 end % journals loop
 
