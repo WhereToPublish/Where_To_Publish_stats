@@ -58,10 +58,15 @@ allPubCountry_names2 = allPubCountry_names(perc_JournalsperCountry > perc_thresh
 % regroup all the remaining journals into one additional "other" category
 n_other_journals = sum(n_journals_perCountry(perc_JournalsperCountry <= perc_threshold));
 perc_other_journals = n_other_journals/n_total_journals;
+perc_JournalsperCountry2(end+1) = perc_other_journals;
 
 % append the other category at the end
 n_journals_perCountry2 = [n_journals_perCountry2, n_other_journals];
 allPubCountry_names2{length(allPubCountry_names2)+1}= 'other';
+
+%% pool final results in a summary table
+summary_table.complex = table(allPubCountry_names, (perc_JournalsperCountry.*100)', 'VariableNames', {'Country', 'Percentage'});
+summary_table.simplified = table(allPubCountry_names2, (perc_JournalsperCountry2.*100)', 'VariableNames', {'Country', 'Percentage'});
 
 %% display filtered pie chart
 figure;
@@ -77,7 +82,7 @@ pch2 = findobj(p2,'Type','patch');
 set(pch2,'EdgeColor','w','LineWidth',2);
 
 %% additional query to verify the % of each publisher for a given country
-country_to_check = 'Switzerland';
+country_to_check = 'Germany / UK';
 publishers_for_that_country = data_table.Publisher(strcmp(publisherCountries,country_to_check));
 pubForThatCountry_names = unique(publishers_for_that_country);
 n_publishers = length(pubForThatCountry_names);
