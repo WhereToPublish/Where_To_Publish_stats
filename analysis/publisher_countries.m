@@ -83,6 +83,8 @@ set(pch2,'EdgeColor','w','LineWidth',2);
 
 %% additional query to verify the % of each publisher for a given country
 country_to_check = 'Germany / UK';
+% country_to_check = 'Netherlands / USA';
+% country_to_check = 'Netherlands';
 publishers_for_that_country = data_table.Publisher(strcmp(publisherCountries,country_to_check));
 pubForThatCountry_names = unique(publishers_for_that_country);
 n_publishers = length(pubForThatCountry_names);
